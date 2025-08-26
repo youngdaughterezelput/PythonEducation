@@ -4,10 +4,10 @@ After=network.target
 
 [Service]
 Type=oneshot
-User=root
-WorkingDirectory=/home/reports
-ExecStart=/usr/bin/python3 /home/reports/main.py --oneshot
-EnvironmentFile=/home/reports/.env
+User=svc_101360
+WorkingDirectory=/home/svc_101360@kifr-ru.local/reports
+ExecStart=/usr/bin/python3 /home/svc_101360@kifr-ru.local/reports/main.py --oneshot
+EnvironmentFile=/home/svc_101360@kifr-ru.local/reports/.env
 
 # Настройки для повторных попыток при ошибках
 Restart=no

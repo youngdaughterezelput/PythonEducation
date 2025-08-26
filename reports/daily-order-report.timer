@@ -1,5 +1,5 @@
 [Unit]
-Description=Run Daily Order Report at HH:MM daily
+Description=Run Daily Order Report at 08:00 daily
 Requires=daily-order-report.service
 
 [Timer]

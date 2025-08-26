@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Переходим в директорию со скриптом
-cd /home/reports
+cd /home/svc_101360@kifr-ru.local/reports
 
 # Активируем виртуальное окружение
 source venv/bin/activate

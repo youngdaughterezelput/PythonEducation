@@ -18,9 +18,9 @@ logging.basicConfig(
 
 def send_email(has_attachment, attachment_path=None, report_date=None):
     # Настройки из переменных окружения
-    smtp_server = os.getenv('SMTP_SERVER', '')
-    smtp_port = int(os.getenv('SMTP_PORT', ''))
-    from_addr = os.getenv('EMAIL_FROM', '')
+    smtp_server = os.getenv('SMTP_SERVER', 'smtp.kifr-ru.local')
+    smtp_port = int(os.getenv('SMTP_PORT', 25))
+    from_addr = os.getenv('EMAIL_FROM', 'monitoring@hoff.ru')
     to_addrs = os.getenv('EMAIL_TO', '').split(',')  # список адресов через запятую
 
     if report_date is None:
@@ -30,14 +30,15 @@ def send_email(has_attachment, attachment_path=None, report_date=None):
     msg = MIMEMultipart()
     msg['From'] = from_addr
     msg['To'] = ', '.join(to_addrs)
-    msg['Subject'] = f"Отчет по заказам за {date_str}"
+    msg['Subject'] = f"Отчет по заказам OMNI за {date_str}"
 
+    # Проверяем существование файла в папке reports
+    file_path = f"reports/{attachment_path}" if attachment_path else None
     if has_attachment and attachment_path and os.path.exists(attachment_path):
-        if has_attachment and attachment_path and os.path.exists(f"reports/{attachment_path}"):
-            body = f"Добрый день! Выгрузка за {date_str} во вложении."
-            # Прикрепляем файл из папки reports
-            with open(f"reports/{attachment_path}", "rb") as f:
-                part = MIMEApplication(f.read(), Name=os.path.basename(attachment_path))
+        body = f"Добрый день! Выгрузка за {date_str} во вложении."
+        # Прикрепляем файл
+        with open(attachment_path, "rb") as f:
+            part = MIMEApplication(f.read(), Name=os.path.basename(attachment_path))
         part['Content-Disposition'] = f'attachment; filename="{os.path.basename(attachment_path)}"'
         msg.attach(part)
         logging.info(f"Файл {attachment_path} прикреплен к письму")

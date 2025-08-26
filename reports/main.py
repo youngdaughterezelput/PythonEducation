@@ -102,9 +102,9 @@ def main():
                 logging.warning("Не удалось отправить email")
             
             # Удаляем файл, если он создавался и мы его отправили
-            if has_data and os.path.exists(f"reports/{filename}"):
-                os.remove(f"reports/{filename}")
-                logging.info(f"Файл reports/{filename} удален")
+            if has_data and os.path.exists(filename):  # Убрано f"reports/{filename}"
+                os.remove(filename)
+                logging.info(f"Файл {filename} удален")
             
             logging.info(f"Отчет {report_type} успешно сгенерирован и отправлен")
             return True
