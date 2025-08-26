@@ -5,4 +5,8 @@ project/
 │   ├── database.py
 │   ├── models.py
 │   ├── schemas.py
-│   └── crud.py
+│   ├── repositories.py
+│   ├── services.py
+│   └── exceptions.py
+├── requirements.txt
+├── run.py

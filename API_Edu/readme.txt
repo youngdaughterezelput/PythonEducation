@@ -11,3 +11,7 @@ pip install fastapi uvicorn sqlalchemy databases aiosqlite
 7) После запуска приложения? получаем доступ к сваггеру http://localhost:8000/docs
 
 8) ReDoc: http://localhost:8000/redoc
+
+
+Важное(для обучения) : Группировка эндпоинтов - с помощью параметра tags в декораторах эндпоинтов
+Описание групп - через параметр openapi_tags в конструкторе FastAPI()
