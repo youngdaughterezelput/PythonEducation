@@ -1,0 +1,21 @@
+[Unit]
+Description=Daily Order Report Service
+After=network.target
+
+[Service]
+Type=oneshot
+User=root
+WorkingDirectory=/home/reports
+ExecStart=/usr/bin/python3 /home/reports/main.py --oneshot
+EnvironmentFile=/home/reports/.env
+
+# Настройки для повторных попыток при ошибках
+Restart=no
+
+# Настройки логирования
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=daily-order-report
+
+[Install]
+WantedBy=multi-user.target
