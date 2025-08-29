@@ -35,12 +35,12 @@ find /opt/order_reports -type f -exec sed -i 's/\r$//' {} \;
 
 
 выдаем права на выполнение chmod +x run_report.sh setup.sh
-mkdir -p /home/svc_101360@kifr-ru.local/reports/logs
-touch /home/svc_101360@kifr-ru.local/reports/logs/order_reports.log
-touch /home/svc_101360@kifr-ru.local/reports/logs/email.log
-chmod 644 /home/svc_101360@kifr-ru.local/reports/logs/*.log
+mkdir -p /home/reports/logs
+touch /home/reports/logs/order_reports.log
+touch /home/reports/logs/email.log
+chmod 644 /home/reports/logs/*.log
 
-основная команда для выдачи прав в директории chmod +x /home/svc_101360@kifr-ru.local/reports/run_report.sh
+основная команда для выдачи прав в директории chmod +x /home/reports/run_report.sh
 
 # Перезагрузите systemd конфигурацию
 sudo systemctl daemon-reload
