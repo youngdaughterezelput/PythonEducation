@@ -14,6 +14,7 @@ from app.exceptions import (
     DatabaseException,
     ValidationException
 )
+from app.database import init_db
 
 # Настройка логирования
 logging.basicConfig(level=logging.INFO)
@@ -38,6 +39,7 @@ app = FastAPI(
 @app.on_event("startup")
 def on_startup():
     init_db()
+    logger.info("Application started and database initialized")
 
 # Глобальные обработчики исключений
 @app.exception_handler(UserNotFoundException)

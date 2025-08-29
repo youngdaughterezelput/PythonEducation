@@ -1,6 +1,9 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from app.models import Base
+import logging
+
+logger = logging.getLogger(__name__)
 
 DATABASE_URL = "sqlite:///./test.db"
 
@@ -15,4 +18,12 @@ def get_db():
         db.close()
 
 def init_db():
-    Base.metadata.create_all(bind=engine)
+    try:
+        # Удаляем все таблицы (если есть)
+        Base.metadata.drop_all(bind=engine)
+        # Создаём таблицы заново
+        Base.metadata.create_all(bind=engine)
+        logger.info("Database tables created successfully")
+    except Exception as e:
+        logger.error(f"Error creating database tables: {e}")
+        raise
