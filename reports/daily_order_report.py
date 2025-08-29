@@ -8,18 +8,22 @@ class DailyOrderReport(BaseReport):
     def __init__(self):
         super().__init__()
         self.report_type = "daily"  
+        self.report_name = "Отчет по заказам"
+        self.report_link = ""
         self.payment_conditions = ""
         self.delivery_conditions = ""
         self.excluded_names = """
-            'Власов Вячеслав', 'Лучкова Ирина', 'Шилов Андрей', 
-            'Никогосян Лидия', 'Сахаров Вячеслав', 'ывапыт Антоноввапы', 
-            'Коуров Данил', 'Гаврилова Милена', 'Данилова Наталья', 
-            'Власов Вячеслав Александрович', 'ОБЩЕСТВО*"ПРИВЕТ"',
-            'vlasov ывфафыва', 'Вячеслав ывфафыва', 'Горюнов Александр'
+            ИСКЛЮЧАЕМЫЕ ИМЕНА
         """
     
     def get_report_type(self):
         return self.report_type
+        
+    def get_report_name(self):
+        return self.report_name
+    
+    def get_report_link(self):
+        return self.report_link
         
     def generate(self, report_date=None):
         if report_date is None:

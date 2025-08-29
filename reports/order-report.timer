@@ -1,6 +1,6 @@
 [Unit]
-Description=Run Daily Order Report at HH:MM daily
-Requires=daily-order-report.service
+Description=Run Order Report daily at HH:MM
+Requires=order-report.service
 
 [Timer]
 OnCalendar=*-*-* 08:00:00

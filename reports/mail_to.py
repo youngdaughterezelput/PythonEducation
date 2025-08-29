@@ -16,7 +16,7 @@ logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
 
-def send_email(has_attachment, attachment_path=None, report_date=None):
+def send_email(has_attachment, attachment_path=None, report_date=None, report_name="Отчет по заказам OMNI", report_link="http://confluence.kifr-ru.local:8090/pages/viewpage.action?pageId=220467208"):
     # Настройки из переменных окружения
     smtp_server = os.getenv('SMTP_SERVER', 'smtp.kifr-ru.local')
     smtp_port = int(os.getenv('SMTP_PORT', 25))
@@ -30,30 +30,50 @@ def send_email(has_attachment, attachment_path=None, report_date=None):
     msg = MIMEMultipart()
     msg['From'] = from_addr
     msg['To'] = ', '.join(to_addrs)
-    msg['Subject'] = f"Отчет по заказам OMNI за {date_str}"
+    msg['Subject'] = f"{report_name} за {date_str}"
 
-    # Проверяем существование файла в папке reports
-    file_path = f"reports/{attachment_path}" if attachment_path else None
+    # Формируем тело письма
     if has_attachment and attachment_path and os.path.exists(attachment_path):
-        body = f"Добрый день! Выгрузка за {date_str} во вложении."
+        main_body = f"Добрый день! Выгрузка за {date_str} во вложении."
+        
         # Прикрепляем файл
+        part = None
         with open(attachment_path, "rb") as f:
             part = MIMEApplication(f.read(), Name=os.path.basename(attachment_path))
-        part['Content-Disposition'] = f'attachment; filename="{os.path.basename(attachment_path)}"'
-        msg.attach(part)
-        logging.info(f"Файл {attachment_path} прикреплен к письму")
+        if part:
+            part['Content-Disposition'] = f'attachment; filename="{os.path.basename(attachment_path)}"'
+            msg.attach(part)
+            logging.info(f"Файл {attachment_path} прикреплен к письму")
     else:
-        body = f"Добрый день! Выгрузка за {date_str} пустая."
+        main_body = f"Добрый день! Выгрузка за {date_str} пустая."
         logging.info("Отчет пустой, файл не прикреплен")
 
-    msg.attach(MIMEText(body, 'plain'))
+    # Формируем HTML-версию письма с сепаратором
+    html_content = f"""
+<html>
+<body>
+    <p>{main_body}</p>
+    
+    <hr style="border: 1px solid #ddd; margin: 20px 0;">
+    
+    <p>С уважением,<br>
+    Отдел поддержки омниканальной архитектуры<br>
+    Почта: <a href="mailto:omni.support@hofftech.ru">omni.support@hofftech.ru</a></p>
+    
+    <p style="font-size: 12px; color: #666;">
+    (Сервер: , Мониторинг: {report_name}, Инструкция: <a href="{report_link}">{report_link}</a>)
+    </p>
+</body>
+</html>
+"""
+
+    # Добавляем HTML-версию письма
+    msg.attach(MIMEText(html_content, 'html'))
 
     try:
-        # Для порта 25 обычно не требуется TLS и аутентификация
         logging.info(f"Подключение к SMTP серверу {smtp_server}:{smtp_port}")
         server = smtplib.SMTP(smtp_server, smtp_port)
         
-        # Не используем starttls() и login() для порта 25 без аутентификации
         logging.info(f"Отправка письма от {from_addr} к {to_addrs}")
         server.sendmail(from_addr, to_addrs, msg.as_string())
         server.quit()
