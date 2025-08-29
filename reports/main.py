@@ -83,7 +83,7 @@ def main():
     
     while retry_count < max_retries:
         try:
-            # Определяем дату отчета (вчера)
+            # Определяем дата отчета (вчера)
             report_date = datetime.now() - timedelta(days=1)
             logging.info(f"Начало генерации отчета {report_type} за {report_date.strftime('%Y-%m-%d')}")
             
@@ -92,9 +92,13 @@ def main():
             filename, has_data = report.generate(report_date)
             logging.info(f"Отчет {report_type} сгенерирован: файл={filename}, есть_данные={has_data}")
             
+            # Получаем название отчета и ссылку для подписи
+            report_name = report.get_report_name() if hasattr(report, 'get_report_name') else report_type
+            report_link = report.get_report_link() if hasattr(report, 'get_report_link') else "http://confluence.kifr-ru.local:8090/pages/viewpage.action?pageId=220467208"
+            
             # Отправляем email с отчетом
             logging.info(f"Отправка email. Данные: {has_data}")
-            email_sent = send_email(has_data, filename, report_date)
+            email_sent = send_email(has_data, filename, report_date, report_name, report_link)
             
             if email_sent:
                 logging.info("Email успешно отправлен")
@@ -102,7 +106,7 @@ def main():
                 logging.warning("Не удалось отправить email")
             
             # Удаляем файл, если он создавался и мы его отправили
-            if has_data and os.path.exists(filename):  # Убрано f"reports/{filename}"
+            if has_data and os.path.exists(filename):
                 os.remove(filename)
                 logging.info(f"Файл {filename} удален")
             
