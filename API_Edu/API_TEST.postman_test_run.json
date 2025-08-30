@@ -1,0 +1,132 @@
+{
+	"id": "11ae3001-80cd-4764-9010-8f8d6a46e7c0",
+	"name": "API_TEST",
+	"timestamp": "2025-08-30T15:33:17.206Z",
+	"collection_id": "42486344-9374a88b-78de-4f55-b9d2-81d242d8929d",
+	"folder_id": 0,
+	"environment_id": "0",
+	"totalPass": 8,
+	"delay": 0,
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2025-08-30T15:33:16.781Z",
+	"totalFail": 2,
+	"results": [
+		{
+			"id": "5b6052f2-ce1e-49d9-94ca-3f806a3a7054",
+			"name": "view user",
+			"url": "http://localhost:8000/users?skip=0&limit=100",
+			"time": 5,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200 OK": true,
+				"Response is an array": true,
+				"Each user has correct structure": true,
+				"Pagination works correctly": true,
+				"Content-Type is application/json": true,
+				"Invalid email returns 422": false,
+				"Validation error structure": false
+			},
+			"testPassFailCounts": {
+				"Status code is 200 OK": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response is an array": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Each user has correct structure": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Pagination works correctly": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is application/json": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Invalid email returns 422": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Validation error structure": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				5
+			],
+			"allTests": [
+				{
+					"Status code is 200 OK": true,
+					"Response is an array": true,
+					"Each user has correct structure": true,
+					"Pagination works correctly": true,
+					"Content-Type is application/json": true,
+					"Invalid email returns 422": false,
+					"Validation error structure": false
+				}
+			]
+		},
+		{
+			"id": "77249217-c867-4e3f-bd38-3cba762f61bb",
+			"name": "create user",
+			"url": "http://localhost:8000/users",
+			"time": 7,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true,
+				"Response has correct structure": true,
+				"Headers are correct": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response has correct structure": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Headers are correct": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"Status code is 201": true,
+					"Response has correct structure": true,
+					"Headers are correct": true
+				}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 12,
+	"collection": {
+		"requests": [
+			{
+				"id": "5b6052f2-ce1e-49d9-94ca-3f806a3a7054",
+				"method": "GET"
+			},
+			{
+				"id": "77249217-c867-4e3f-bd38-3cba762f61bb",
+				"method": "POST"
+			}
+		]
+	}
+}
