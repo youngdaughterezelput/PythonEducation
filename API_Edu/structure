@@ -1,0 +1,12 @@
+project/
+├── app/
+│   ├── __init__.py
+│   ├── main.py
+│   ├── database.py
+│   ├── models.py
+│   ├── schemas.py
+│   ├── repositories.py
+│   ├── services.py
+│   └── exceptions.py
+├── requirements.txt
+├── run.py
